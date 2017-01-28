@@ -29,8 +29,7 @@ public class Controller {
 	
 	@RequestMapping("/geocode/history")
 	@ResponseBody
-	public ResponseEntity<Address[]> geocode(@RequestParam(value = "key") String apiKey,
-            HttpServletRequest request, HttpServletResponse response) {
-		return new ResponseEntity<Address[]>(AddressRepo.getInstance().getHistory(apiKey), HttpStatus.OK);
+	public ResponseEntity<Address[]> geocode(HttpServletRequest request, HttpServletResponse response) {
+		return new ResponseEntity<Address[]>(AddressRepo.getInstance().getHistory(), HttpStatus.OK);
 	}
 }

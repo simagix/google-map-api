@@ -31,10 +31,9 @@ public class AddressRepo {
 	
 	/**
 	 * Get cached lookup history
-	 * @param key
 	 * @return
 	 */
-	public Address[] getHistory(String key) {
+	public Address[] getHistory() {
 		return addresses;
 	}
 
