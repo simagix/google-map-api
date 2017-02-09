@@ -3,6 +3,7 @@ package atlas;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,7 @@ public class AddressRepo {
 
 	public List<Address> getCache(int num) {
 		Cache cache = cacheManager.getCache("addresses");
-		Object nativeCache = cache.getNativeCache();
-		System.out.println(nativeCache);
-		List<Address> addresses = new ArrayList<Address>(num);
-		return addresses;
+        ConcurrentHashMap<?, Address> map = (ConcurrentHashMap<?, Address>) cache.getNativeCache();
+        return new ArrayList<Address>(map.values());
 	}
 }
