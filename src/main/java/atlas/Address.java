@@ -1,6 +1,7 @@
 package atlas;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
@@ -12,7 +13,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Address {
+public class Address implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String latLong;
 	private String formattedAddress;
 	private Date eventTime;

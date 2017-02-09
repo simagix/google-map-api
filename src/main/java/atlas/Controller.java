@@ -38,6 +38,6 @@ public class Controller {
 	@RequestMapping("/geocode/history")
 	@ResponseBody
 	public ResponseEntity<List<Address>> geocode(HttpServletRequest request, HttpServletResponse response) {
-		return new ResponseEntity<List<Address>>(repo.getCache(10), HttpStatus.OK);
+		return new ResponseEntity<List<Address>>(repo.getCache(), HttpStatus.OK);
 	}
 }

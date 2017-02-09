@@ -31,9 +31,23 @@ public class AddressRepo {
 	@Autowired
     private org.springframework.cache.CacheManager cacheManager;
 
-	public List<Address> getCache(int num) {
+	public List<Address> getCache() {
 		Cache cache = cacheManager.getCache("addresses");
-        ConcurrentHashMap<?, Address> map = (ConcurrentHashMap<?, Address>) cache.getNativeCache();
-        return new ArrayList<Address>(map.values());
+		Object object = cache.getNativeCache();
+		
+		if(object instanceof net.sf.ehcache.Cache) {
+			List<Address> addresses = new ArrayList<Address>();
+			net.sf.ehcache.Cache ncache = (net.sf.ehcache.Cache) object;
+			List<?> list = ncache.getKeys();
+			for(int i = 0; i < list.size(); i++) {
+	        	addresses.add((Address) ncache.get(list.get(i)).getObjectValue());
+			}
+	        return addresses;
+		} else if(cache instanceof ConcurrentHashMap) {
+	        ConcurrentHashMap<?, Address> map = (ConcurrentHashMap<?, Address>) cache.getNativeCache();
+	        List<Address> addresses = new ArrayList<Address>(map.values());
+	        return addresses;
+		}
+		return new ArrayList<Address>();
 	}
 }
