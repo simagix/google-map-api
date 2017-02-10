@@ -51,6 +51,7 @@ public class Address implements Serializable {
 
 	private void getFromGoogleMap(String latLong, String key)
 			throws InvalidInputException, ClientProtocolException, IOException {
+		validateLatLong(latLong);
 		String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latLong + "&key=" + key;
 		System.out.println("getFromGoogleMap " + url);
 		HttpClient client = HttpClientBuilder.create().build();
@@ -67,5 +68,16 @@ public class Address implements Serializable {
 		}
 
 		throw new InvalidInputException();
+	}
+	
+	private void validateLatLong(String latLong) throws InvalidInputException {
+		String tokens[] = latLong.split(",");
+		float latitude = Float.parseFloat(tokens[0]);
+		float longitude = Float.parseFloat(tokens[1]);
+		if(latitude > 90 || latitude < -90) {
+			throw new InvalidInputException();
+		} else if(longitude > 180 || longitude < -180) {
+			throw new InvalidInputException();
+		}
 	}
 }
